@@ -34,21 +34,30 @@ void drawInputDist(){
 		}
 	}
 
+	TLatex sPHENIX;
+	sPHENIX.SetTextFont(42);
+        sPHENIX.SetTextAlign(12);
+        sPHENIX.SetTextSize(0.035);
+
 
 	TCanvas *c1 = new TCanvas("c1","",1000,1000);
 	c1->SetRightMargin(0.175);
 	fluctR->GetZaxis()->SetMaxDigits(2);
 	fluctR->Draw("COLZ");
+	sPHENIX.DrawLatexNDC(0.175,0.92,"#bf{#it{sPHENIX}} Simulation");
 	c1->SaveAs("radialDistortion_input.svg");
+	c1->SaveAs("radialDistortion_input.png");
 
 	c1->Clear();
 	c1->SetRightMargin(0.185);
 	fluctPhi->GetZaxis()->SetTitleOffset(1.4);
 	fluctPhi->GetZaxis()->SetMaxDigits(1);
 	fluctPhi->Draw("COLZ");
+	sPHENIX.DrawLatexNDC(0.175,0.92,"#bf{#it{sPHENIX}} Simulation");
 	c1->SaveAs("phiDistortion_input.svg");
+	c1->SaveAs("phiDistortion_input.png");
 
 
-
+        
 
 }

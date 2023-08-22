@@ -55,11 +55,22 @@ void drawTruthPatternXY(bool pos=true){
 	//g3->GetYaxis()->SetTitleOffset(1.2f);
 	g3->SetTitle("");
 
+
+	TLatex sPHENIX;
+        sPHENIX.SetTextFont(42);
+        sPHENIX.SetTextAlign(12);
+        sPHENIX.SetTextSize(0.035);
+
+
+
+	
 	TCanvas *c1 = new TCanvas("c1","",1000,1000);
 	g3->Draw("AP");
 	g2->Draw("PSAME");
 	g1->Draw("PSAME");
+        sPHENIX.DrawLatexNDC(0.2,0.9,"#bf{#it{sPHENIX}} Simulation");
 
 	c1->SaveAs("TruthPositions.svg");
+	c1->SaveAs("TruthPositions.png");
 
 }

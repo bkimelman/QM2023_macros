@@ -19,8 +19,8 @@ void drawPad33(){
 	double ADC28 = 0.0;
 	int layer28 = 0.0;
 
-	TH2D *h11 = new TH2D("h11","Run11011 ebdc07 hits, 1k events;#phi;Pad Row;ADC",148,-2.92069942013426,-2.31528833584873,18,21.5,39.5);
-	TH2D *h28 = new TH2D("h28","Run11028 ebdc07 hits, 1k events;#phi;Pad Row;ADC",148,-2.92069942013426,-2.31528833584873,18,21.5,39.5);
+	TH2D *h11 = new TH2D("h11","Run11011 sector19 south hits, 1k events;#phi;Pad Row;ADC",148,-2.92069942013426,-2.31528833584873,18,21.5,40.5);
+	TH2D *h28 = new TH2D("h28","Run11028 sector19 south hits, 1k events;#phi;Pad Row;ADC",148,-2.92069942013426,-2.31528833584873,18,21.5,40.5);
 
 	t11->SetBranchAddress("X",&X11);
 	t11->SetBranchAddress("Y",&Y11);
@@ -86,17 +86,48 @@ void drawPad33(){
 	//gr->GetYaxis()->SetTitleOffset(1.2f);
 	gr->SetTitle("");
 
+	TLatex sPHENIX;
+	sPHENIX.SetTextFont(42);
+	sPHENIX.SetTextAlign(12);
+	sPHENIX.SetTextSize(0.035);
+	
 	TCanvas *c1 = new TCanvas("c1","",1000,1000);
-	c1->SetRightMargin(0.175f);
+	c1->SetTopMargin(0.1);
+	c1->SetRightMargin(0.2f);
+	c1->SetLeftMargin(0.15);
 	h11->GetZaxis()->SetMaxDigits(1);
+	h11->GetZaxis()->SetTitleOffset(1.4);
 	h11->Draw("COLZ");
 	gr->Draw("PSAME");
+	sPHENIX.DrawLatexNDC(0.175,0.85,"#bf{#it{sPHENIX}} Preliminary");
+
+	TPaveText *h11Title = new TPaveText(0.25,0.92,0.75,0.98,"NDC");
+	h11Title->SetFillStyle(0);
+	h11Title->SetBorderSize(0);
+	h11Title->SetTextFont(42);
+	h11Title->SetTextSize(0.05);
+	h11Title->AddText("Run11011 sector19 south hits, 1k events");
+	h11Title->Draw("same");
+	
 	c1->SaveAs("Run11011_hits_truth.svg");
+	c1->SaveAs("Run11011_hits_truth.png");
 
 	c1->Clear();
 	h28->GetZaxis()->SetMaxDigits(2);
+	h28->GetZaxis()->SetTitleOffset(1.4);
 	h28->Draw("COLZ");
 	gr->Draw("PSAME");
+
+	TPaveText *h28Title = new TPaveText(0.25,0.92,0.75,0.98,"NDC");
+	h28Title->SetFillStyle(0);
+	h28Title->SetBorderSize(0);
+	h28Title->SetTextFont(42);
+	h28Title->SetTextSize(0.05);
+	h28Title->AddText("Run11028 sector19 south hits, 1k events");
+        h28Title->Draw("same");
+	sPHENIX.DrawLatexNDC(0.175,0.85,"#bf{#it{sPHENIX}} Preliminary");
+	
 	c1->SaveAs("Run11028_hits_truth.svg");
+	c1->SaveAs("Run11028_hits_truth.png");
 
 }
