@@ -22,15 +22,15 @@ void drawInputDist(){
 
 	timeTree->GetEntry(0);
 
-	TH2F *fluctR = new TH2F("fluctR",";#phi;R [cm];Radial Distortion [cm]",fRad3D->GetNbinsX(),fRad3D->GetXaxis()->GetBinLowEdge(1),fRad3D->GetXaxis()->GetBinLowEdge(fRad3D->GetNbinsX()+1),fRad3D->GetNbinsY(),fRad3D->GetYaxis()->GetBinLowEdge(1),fRad3D->GetYaxis()->GetBinLowEdge(fRad3D->GetNbinsY()+1));
-	TH2F *fluctPhi = new TH2F("fluctPhi",";#phi;R [cm];#phi Distortion [rad]",fPhi3D->GetNbinsX(),fPhi3D->GetXaxis()->GetBinLowEdge(1),fPhi3D->GetXaxis()->GetBinLowEdge(fPhi3D->GetNbinsX()+1),fPhi3D->GetNbinsY(),fPhi3D->GetYaxis()->GetBinLowEdge(1),fPhi3D->GetYaxis()->GetBinLowEdge(fPhi3D->GetNbinsY()+1));
+	TH2F *fluctR = new TH2F("fluctR",";#phi;R [cm];Radial Distortion [#mum]",fRad3D->GetNbinsX(),fRad3D->GetXaxis()->GetBinLowEdge(1),fRad3D->GetXaxis()->GetBinLowEdge(fRad3D->GetNbinsX()+1),fRad3D->GetNbinsY(),fRad3D->GetYaxis()->GetBinLowEdge(1),fRad3D->GetYaxis()->GetBinLowEdge(fRad3D->GetNbinsY()+1));
+	TH2F *fluctPhi = new TH2F("fluctPhi",";#phi;R [cm];#phi Distortion [mrad]",fPhi3D->GetNbinsX(),fPhi3D->GetXaxis()->GetBinLowEdge(1),fPhi3D->GetXaxis()->GetBinLowEdge(fPhi3D->GetNbinsX()+1),fPhi3D->GetNbinsY(),fPhi3D->GetYaxis()->GetBinLowEdge(1),fPhi3D->GetYaxis()->GetBinLowEdge(fPhi3D->GetNbinsY()+1));
 
 	int zBin = fRad3D->GetZaxis()->FindBin(-1.0);
 
 	for(int i=1; i<=fRad3D->GetNbinsX(); i++){
 		for(int j=1; j<=fRad3D->GetNbinsY(); j++){
-			fluctR->SetBinContent(i,j, fRad3D->GetBinContent(i,j,zBin) - sRad3D->GetBinContent(i,j,zBin) );
-			fluctPhi->SetBinContent(i,j, fPhi3D->GetBinContent(i,j,zBin) - sPhi3D->GetBinContent(i,j,zBin) );
+		  fluctR->SetBinContent(i,j, (1e4)*(fRad3D->GetBinContent(i,j,zBin) - sRad3D->GetBinContent(i,j,zBin)) );
+		  fluctPhi->SetBinContent(i,j, (1e3)*(fPhi3D->GetBinContent(i,j,zBin) - sPhi3D->GetBinContent(i,j,zBin)) );
 		}
 	}
 
@@ -42,6 +42,7 @@ void drawInputDist(){
 
 	TCanvas *c1 = new TCanvas("c1","",1000,1000);
 	c1->SetRightMargin(0.175);
+	fluctR->GetZaxis()->SetTitleOffset(1.3);
 	fluctR->GetZaxis()->SetMaxDigits(2);
 	fluctR->Draw("COLZ");
 	sPHENIX.DrawLatexNDC(0.175,0.92,"#bf{#it{sPHENIX}} Simulation");
@@ -52,6 +53,7 @@ void drawInputDist(){
 	c1->SetRightMargin(0.185);
 	fluctPhi->GetZaxis()->SetTitleOffset(1.4);
 	fluctPhi->GetZaxis()->SetMaxDigits(1);
+	fluctPhi->GetZaxis()->SetNoExponent(true);
 	fluctPhi->Draw("COLZ");
 	sPHENIX.DrawLatexNDC(0.175,0.92,"#bf{#it{sPHENIX}} Simulation");
 	c1->SaveAs("phiDistortion_input.svg");

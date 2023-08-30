@@ -57,18 +57,32 @@ void drawTruthPatternXY(bool pos=true){
 
 
 	TLatex sPHENIX;
-        sPHENIX.SetTextFont(42);
-        sPHENIX.SetTextAlign(12);
-        sPHENIX.SetTextSize(0.035);
+    sPHENIX.SetTextFont(42);
+    sPHENIX.SetTextAlign(12);
+    sPHENIX.SetTextSize(0.035);
 
 
+	TLatex stripe;
+	stripe.SetTextSize(42);
+	stripe.SetTextAlign(12);
+	stripe.SetTextSize(0.035);
 
+	TLatex date;
+	date.SetTextSize(35);
+	date.SetTextAlign(12);
+	date.SetTextSize(0.035);
 	
 	TCanvas *c1 = new TCanvas("c1","",1000,1000);
+	//c1->SetLeftMargin(3.4);
+	//c1->SetBottomMargin(3.4);
+	c1->SetFixedAspectRatio();
 	g3->Draw("AP");
 	g2->Draw("PSAME");
 	g1->Draw("PSAME");
-        sPHENIX.DrawLatexNDC(0.2,0.9,"#bf{#it{sPHENIX}} Simulation");
+    sPHENIX.DrawLatexNDC(0.175,0.92,"#bf{#it{sPHENIX}} Simulation");
+    stripe.DrawLatexNDC(0.175,0.875,"Al stripes on TPC CM");
+    date.DrawLatexNDC(0.82,0.97,"#it{08/30/2023}");
+
 
 	c1->SaveAs("TruthPositions.svg");
 	c1->SaveAs("TruthPositions.png");
